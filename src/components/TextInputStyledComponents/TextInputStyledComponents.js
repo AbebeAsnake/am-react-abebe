@@ -1,24 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Label from '../Label';
-import styles  from './textInput.module.css';
+import styled from 'styled-components';
 /** Text input with integrated label to enforce consistency in layout, error display, label placement, and required field marker. */
 function TextInput({htmlId, name, label, type = "text", required = false, onChange, placeholder, value, error, children, ...props}) {
+    const Error = styled.div`
+    color: red;
+    `;
+    const Input = styled.input`
+    border: ${error && 'solid 1px red'};
+    display: block;
+  `;
+
+  const Fieldset = styled.div`
+    margin-bottom: 16px;
+  `;
+
   return (
-    <div className={styles.fieldset}>
+    <Fieldset>
       <Label htmlFor={htmlId} label={label} required={required} />
-      <input
+      <Input
         id={htmlId}
         type={type}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={error && styles.inputError}
         {...props}/>
         {children}
-      {error && <div className={styles.errror}>{error}</div>}
-    </div>
+      {error && <Error>{error}</Error>}
+    </Fieldset>
   );
 };
 
